@@ -1,0 +1,46 @@
+import java.util.*;
+public class MergerSort
+{
+        public static void main(String[] args)
+        {
+                Integer[] a = {2, 6, 3, 5, 1};
+                ordenamientoMergeSort(a);
+                System.out.println(Arrays.toString(a));
+        }
+        public static void ordenamientoMergeSort(Comparable [] a)
+        {
+                Comparable[] tmp = new Comparable[a.length];
+                ordenamientoMergeSort(a, tmp,  0,  a.length - 1);
+        }
+        private static void ordenamientoMergeSort(Comparable [ ] a, Comparable [ ] tmp, int izquierda, int derecho)
+        {
+                if( izquierda < derecho )
+                {
+                        int center = (izquierda + derecho) / 2;
+                        ordenamientoMergeSort(a, tmp, izquierda, center);
+                        ordenamientoMergeSort(a, tmp, center + 1, derecho);
+                        merge(a, tmp, izquierda, center + 1, derecho);
+                }
+        }
+    private static void merge(Comparable[ ] a, Comparable[ ] tmp, int izquierda, int derecho, int derechoEnd )
+    {
+        int izquierdaEnd = derecho - 1;
+        int k = izquierda;
+        int num = derechoEnd - izquierda + 1;
+
+        while(izquierda <= izquierdaEnd && derecho <= derechoEnd)
+            if(a[izquierda].compareTo(a[derecho]) <= 0)
+                tmp[k++] = a[izquierda++];
+            else
+                tmp[k++] = a[derecho++];
+
+        while(izquierda <= izquierdaEnd) 
+            tmp[k++] = a[izquierda++];
+
+        while(derecho <= derechoEnd)  
+            tmp[k++] = a[derecho++];
+
+        for(int i = 0; i < num; i++, derechoEnd--)
+            a[derechoEnd] = tmp[derechoEnd];
+    }
+ }
